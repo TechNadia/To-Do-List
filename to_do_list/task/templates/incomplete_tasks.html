@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+{% if messages %}
+{% for m in messages %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  {{ m }}
+<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+{% endfor %}
+
+{% endif %}
+<br>
+
+<h2 style="text-align: center;">List of Incomplete Tasks</h2>
+<br>
+<table class="table table-bordered">
+    <thead>
+      <tr>
+        <!--<th scope="col">#</th>-->
+        <th scope="col">Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">Status</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for x in data %}       
+    
+      <tr>
+        <!--<th scope="row">{{x.id}}</th>-->
+        <td>{{x.taskTitle}}</td>
+        <td>{{x.taskDescription}}</td>
+        <td>
+            {% if x.is_completed %}Complete
+            {% else %}Incomplete
+            {% endif %}
+        </td>
+        <td>
+                                 
+            <a href="{% url 'edit' id=x.id %}">
+                <i class="bi bi-pencil btn btn-primary"></i> 
+            </a>
+            <a href="{% url 'delete' id=x.id %}">
+                <i class="bi bi-trash btn btn-danger"></i>
+            </a>
+            <a href="{% url 'make_complete' id=x.id %}">
+                <i class="bi bi-plus-circle btn btn-success"></i>
+            </a>
+            
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock content %}
